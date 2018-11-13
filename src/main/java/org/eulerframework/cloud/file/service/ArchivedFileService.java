@@ -70,7 +70,7 @@ public class ArchivedFileService extends LogSupport {
         return CommonUtils.convertDirToUnixFormat(runtimePath, false) + "/archived/file";
     }
 
-    public ArchivedFile saveMultipartFile(MultipartFile multipartFile) throws FileArchiveException {
+    public ArchivedFile saveMultipartFile(MultipartFile multipartFile) throws IOException {
         String archiveFilePath = this.getFileArchivePath();
         String archivedPathSuffix = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
 
@@ -93,11 +93,11 @@ public class ArchivedFileService extends LogSupport {
             if (targetFile.exists())
                 SimpleFileIOUtils.deleteFile(targetFile);
 
-            throw new FileArchiveException(e);
+            throw e;
         }
     }
 
-    public ArchivedFileDTO findArchivedFile(String archivedFileId, String extensions){
+    public ArchivedFile findArchivedFile(String archivedFileId, String extensions) {
         Assert.isFalse(StringUtils.isNull(archivedFileId), "archivedFileId can not be empty");
 
         ArchivedFile archivedFile = this.archivedFileRepository.findArchivedFileById(archivedFileId);
@@ -109,6 +109,12 @@ public class ArchivedFileService extends LogSupport {
         if(StringUtils.hasText(extensions) && !extensions.equalsIgnoreCase(archivedFile.getExtension())) {
             throw new ArchivedFileNotFoundException(archivedFileId, extensions);
         }
+
+        return archivedFile;
+    }
+
+    public ArchivedFileDTO findArchivedFileDTO(String archivedFileId, String extensions){
+        ArchivedFile archivedFile = this.findArchivedFile(archivedFileId, extensions);
 
         String archivedFilePath = this.getFileArchivePath();
 
