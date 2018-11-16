@@ -17,12 +17,12 @@ spring:
 euler:
   runtime-path: /var/lib/euler-cloud/file
 
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:10000/eureka
-#    healthcheck:
-#      enabled: true
-#  instance:
-#    prefer-ip-address: true
-#    instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+    #instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}

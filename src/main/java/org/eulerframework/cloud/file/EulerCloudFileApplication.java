@@ -4,6 +4,7 @@ import org.eulerframework.cloud.EnableEulerCloud;
 import org.eulerframework.web.core.i18n.ClassPathReloadableResourceBundleMessageSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 
@@ -11,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication
 @EnableEulerCloud
+@EnableDiscoveryClient
 public class EulerCloudFileApplication {
 
     public static void main(String[] args) {
