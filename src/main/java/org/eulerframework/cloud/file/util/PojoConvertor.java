@@ -32,7 +32,7 @@ public class PojoConvertor {
         archivedFileVO.setMd5(archivedFile.getMd5());
         archivedFileVO.setOriginalFilename(archivedFile.getOriginalFilename());
         archivedFileVO.setUploadedAt(archivedFile.getUploadedAt());
-        archivedFileVO.setUploadedUserId(archivedFile.getUploadedUserId());
+        archivedFileVO.setUploadedBy(archivedFile.getUploadedBy());
         return archivedFileVO;
     }
 }

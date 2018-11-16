@@ -24,7 +24,7 @@ public class ArchivedFileVO {
     private String md5;
     private Long fileByteSize;
     private Date uploadedAt;
-    private String uploadedUserId;
+    private String uploadedBy;
 
     public String getId() {
         return id;
@@ -74,11 +74,11 @@ public class ArchivedFileVO {
         this.uploadedAt = uploadedAt;
     }
 
-    public String getUploadedUserId() {
-        return uploadedUserId;
+    public String getUploadedBy() {
+        return uploadedBy;
     }
 
-    public void setUploadedUserId(String uploadedUserId) {
-        this.uploadedUserId = uploadedUserId;
+    public void setUploadedBy(String uploadedBy) {
+        this.uploadedBy = uploadedBy;
     }
 }
