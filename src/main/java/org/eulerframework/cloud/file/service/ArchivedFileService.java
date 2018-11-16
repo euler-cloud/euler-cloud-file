@@ -57,7 +57,7 @@ public class ArchivedFileService extends LogSupport {
         af.setFileByteSize(fileSize);
         af.setMd5(md5);
         af.setUploadedAt(new Date());
-        af.setUploadedUserId("anonymousUser");//TODO:记录上传者ID
+        af.setUploadedBy("anonymousUser");//TODO:记录上传者ID
 
         this.archivedFileRepository.save(af);
 
