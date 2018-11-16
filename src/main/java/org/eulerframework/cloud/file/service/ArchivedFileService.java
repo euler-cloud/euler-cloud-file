@@ -1,11 +1,10 @@
 package org.eulerframework.cloud.file.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.eulerframework.cloud.file.conf.EulerCloudConfig;
+import org.eulerframework.cloud.config.EulerCloudConfig;
 import org.eulerframework.cloud.file.dto.ArchivedFileDTO;
 import org.eulerframework.cloud.file.entity.ArchivedFile;
 import org.eulerframework.cloud.file.exception.ArchivedFileNotFoundException;
-import org.eulerframework.cloud.file.exception.FileArchiveException;
 import org.eulerframework.cloud.file.repository.ArchivedFileRepository;
 import org.eulerframework.common.base.log.LogSupport;
 import org.eulerframework.common.util.Assert;

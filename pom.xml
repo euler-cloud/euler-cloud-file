@@ -39,12 +39,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.eulerframework</groupId>
-            <artifactId>euler-web-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eulerframework</groupId>
-            <artifactId>euler-web-orm-jpa</artifactId>
+            <groupId>org.eulerframework.cloud</groupId>
+            <artifactId>euler-cloud-starter</artifactId>
         </dependency>
 
         <dependency>
