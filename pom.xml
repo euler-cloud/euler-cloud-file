@@ -22,8 +22,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
-        <euler-cloud.version>1.0.0.M1-SNAPSHOT</euler-cloud.version>
     </properties>
 
     <dependencyManagement>
@@ -31,14 +29,14 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>Finchley.SR2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.eulerframework.cloud</groupId>
                 <artifactId>euler-cloud-dependencies</artifactId>
-                <version>${euler-cloud.version}</version>
+                <version>1.0.0.M1-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -49,6 +47,16 @@
         <dependency>
             <groupId>org.eulerframework.cloud</groupId>
             <artifactId>euler-cloud-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eulerframework</groupId>
+            <artifactId>euler-web-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eulerframework</groupId>
+            <artifactId>euler-web-orm-jpa</artifactId>
         </dependency>
 
         <dependency>
@@ -96,6 +104,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
