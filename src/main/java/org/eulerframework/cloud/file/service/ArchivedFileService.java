@@ -41,7 +41,7 @@ public class ArchivedFileService extends LogSupport {
     @Autowired
     private ArchivedFileRepository archivedFileRepository;
 
-    private ArchivedFile saveFileInfo(String originalFilename, String archivedPathSuffix, File archivedFile)
+    private ArchivedFile saveFileInfo(String userId, String originalFilename, String archivedPathSuffix, File archivedFile)
             throws IOException {
         InputStream inputStream = new FileInputStream(archivedFile);
         String md5 = DigestUtils.md5Hex(inputStream);
@@ -57,7 +57,7 @@ public class ArchivedFileService extends LogSupport {
         af.setFileByteSize(fileSize);
         af.setMd5(md5);
         af.setUploadedAt(new Date());
-        af.setUploadedBy("anonymousUser");//TODO:记录上传者ID
+        af.setUploadedBy(userId);
 
         this.archivedFileRepository.save(af);
 
@@ -69,7 +69,7 @@ public class ArchivedFileService extends LogSupport {
         return CommonUtils.convertDirToUnixFormat(runtimePath, false) + "/archived/file";
     }
 
-    public ArchivedFile saveMultipartFile(MultipartFile multipartFile) throws IOException {
+    public ArchivedFile saveMultipartFile(String userId, MultipartFile multipartFile) throws IOException {
         String archiveFilePath = this.getFileArchivePath();
         String archivedPathSuffix = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
 
@@ -85,10 +85,11 @@ public class ArchivedFileService extends LogSupport {
         try {
             multipartFile.transferTo(targetFile);
 
-            this.logger.info("已保存文件: " + targetFile.getPath());
+            this.logger.info("file uploaded: " + targetFile.getPath());
 
-            return this.saveFileInfo(originalFilename, archivedPathSuffix, targetFile);
-        } catch (IllegalStateException | IOException e) {
+            return this.saveFileInfo(userId, originalFilename, archivedPathSuffix, targetFile);
+        } catch (Exception e) {
+            this.logger.error("Some exception is thrown, delete uploaded file if exists. exception is " + e.getMessage(), e);
             if (targetFile.exists())
                 SimpleFileIOUtils.deleteFile(targetFile);
 
@@ -126,16 +127,5 @@ public class ArchivedFileService extends LogSupport {
         archivedFileDTO.setFile(file);
         archivedFileDTO.setOriginalFileName(archivedFile.getOriginalFilename());
         return archivedFileDTO;
-    }
-
-    /**
-     * 用于在程序发生{@link AccessDeniedException}异常时统一返回错误信息
-     *
-     * @return 包含错误信息的Ajax响应体
-     */
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(FileNotFoundException.class)
-    public Object fileNotFoundException(FileNotFoundException e) {
-        return new ErrorResponse(new WebException(e.getMessage(), SystemWebError.ACCESS_DENIED, e));
     }
 }

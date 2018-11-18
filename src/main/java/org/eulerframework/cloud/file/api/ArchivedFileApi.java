@@ -7,16 +7,23 @@ import org.eulerframework.cloud.file.exception.FileArchiveException;
 import org.eulerframework.cloud.file.service.ArchivedFileService;
 import org.eulerframework.cloud.file.util.PojoConvertor;
 import org.eulerframework.cloud.file.vo.ArchivedFileVO;
+import org.eulerframework.cloud.security.EulerCloudUserContext;
 import org.eulerframework.common.util.io.file.FileUtils;
 import org.eulerframework.web.core.base.controller.ApiSupportWebController;
+import org.eulerframework.web.core.base.response.ErrorResponse;
+import org.eulerframework.web.core.exception.web.SystemWebError;
+import org.eulerframework.web.core.exception.web.WebException;
 import org.eulerframework.web.util.ServletUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +46,8 @@ public class ArchivedFileApi extends ApiSupportWebController {
      */
     @PostMapping
     public ArchivedFileVO uploadFile(MultipartFile file) throws IOException {
-        return PojoConvertor.toVO(this.archivedFileService.saveMultipartFile(file));
+        String currentUserId = EulerCloudUserContext.getCurrentUserId();
+        return PojoConvertor.toVO(this.archivedFileService.saveMultipartFile(currentUserId, file));
     }
 
     /**
@@ -49,7 +57,6 @@ public class ArchivedFileApi extends ApiSupportWebController {
      */
     @GetMapping("{archivedFileId}")
     public void downloadFile(@PathVariable String archivedFileId) throws IOException {
-        System.out.println(ServletUtils.getRequest().getRequestURI());
         String extensions = FileUtils.extractFileExtension(archivedFileId);
         archivedFileId = FileUtils.extractFileNameWithoutExtension(archivedFileId);
         ArchivedFileDTO archivedFileDTO = this.archivedFileService.findArchivedFileDTO(archivedFileId, extensions);
@@ -66,9 +73,19 @@ public class ArchivedFileApi extends ApiSupportWebController {
      */
     @GetMapping("info/{archivedFileId}")
     public ArchivedFileVO findArchivedFile(@PathVariable String archivedFileId) {
-        System.out.println(ServletUtils.getRequest().getRequestURI());
         String extensions = FileUtils.extractFileExtension(archivedFileId);
         archivedFileId = FileUtils.extractFileNameWithoutExtension(archivedFileId);
         return PojoConvertor.toVO(this.archivedFileService.findArchivedFile(archivedFileId, extensions));
+    }
+
+    /**
+     * 用于在程序发生{@link ArchivedFileNotFoundException}异常时统一返回错误信息
+     *
+     * @return 包含错误信息的Ajax响应体
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ArchivedFileNotFoundException.class)
+    public Object archivedFileNotFoundException(ArchivedFileNotFoundException e) {
+        return new ErrorResponse(new WebException(e.getMessage(), SystemWebError.RESOURCE_NOT_FOUND, e));
     }
 }
