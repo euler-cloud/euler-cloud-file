@@ -19,6 +19,6 @@ import org.eulerframework.web.core.exception.web.WebException;
 
 public class ArchivedFileNotFoundException extends WebException {
     public ArchivedFileNotFoundException(String archivedFileId, String extensions) {
-        super(String.format("Archived file %s was not exists.", archivedFileId + extensions));
+        super(String.format("Archived file %s was not exists.", archivedFileId + (extensions == null ? "" : extensions)));
     }
 }
