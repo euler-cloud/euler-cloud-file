@@ -24,16 +24,6 @@ public class EulerCloudFileApplication {
     }
 
     @Bean
-    public MessageSource messageSource() {
-        ClassPathReloadableResourceBundleMessageSource messageSource = new ClassPathReloadableResourceBundleMessageSource();
-        messageSource.setCacheSeconds(10);
-        messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        messageSource.setUseCodeAsDefaultMessage(true);
-        messageSource.setBasename("classpath*:language/**/*");
-        return messageSource;
-    }
-
-    @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         ShallowEtagHeaderFilter shallowEtagHeaderFilter = new ShallowEtagHeaderFilter();
