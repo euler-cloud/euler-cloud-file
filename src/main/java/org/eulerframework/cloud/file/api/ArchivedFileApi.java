@@ -1,9 +1,7 @@
 package org.eulerframework.cloud.file.api;
 
 import org.eulerframework.cloud.file.dto.ArchivedFileDTO;
-import org.eulerframework.cloud.file.entity.ArchivedFile;
 import org.eulerframework.cloud.file.exception.ArchivedFileNotFoundException;
-import org.eulerframework.cloud.file.exception.FileArchiveException;
 import org.eulerframework.cloud.file.service.ArchivedFileService;
 import org.eulerframework.cloud.file.util.PojoConvertor;
 import org.eulerframework.cloud.file.vo.ArchivedFileVO;
@@ -13,7 +11,6 @@ import org.eulerframework.web.core.base.controller.ApiSupportWebController;
 import org.eulerframework.web.core.base.response.ErrorResponse;
 import org.eulerframework.web.core.exception.web.SystemWebError;
 import org.eulerframework.web.core.exception.web.WebException;
-import org.eulerframework.web.util.ServletUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
