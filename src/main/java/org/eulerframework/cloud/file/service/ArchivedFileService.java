@@ -1,7 +1,7 @@
 package org.eulerframework.cloud.file.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.eulerframework.cloud.config.EulerCloudConfig;
+import org.eulerframework.boot.autoconfigure.web.EulerApplicationProperties;
 import org.eulerframework.cloud.file.dto.ArchivedFileDTO;
 import org.eulerframework.cloud.file.entity.ArchivedFile;
 import org.eulerframework.cloud.file.exception.ArchivedFileNotFoundException;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class ArchivedFileService extends LogSupport {
 
     @Autowired
-    private EulerCloudConfig eulerCloudConfig;
+    private EulerApplicationProperties eulerApplicationProperties;
 
     @Autowired
     private ArchivedFileRepository archivedFileRepository;
@@ -57,7 +57,7 @@ public class ArchivedFileService extends LogSupport {
     }
 
     private String getFileArchivePath() {
-        String runtimePath = eulerCloudConfig.getRuntimePath();
+        String runtimePath = eulerApplicationProperties.getRuntimePath();
         return CommonUtils.convertDirToUnixFormat(runtimePath, false) + "/archived/file";
     }
 
